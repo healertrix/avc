@@ -1,0 +1,348 @@
+# SimpleCoin API Documentation
+
+This document outlines the API endpoints for the SimpleCoin cryptocurrency.
+
+## Base URL
+
+All API requests should be made to:
+
+```
+http://localhost:3000/api
+```
+
+## Endpoints
+
+### 1. Create Transaction
+
+Creates a new transaction and adds it to the mempool.
+
+- **URL:** `/transaction`
+- **Method:** `POST`
+- **Data Params:**
+  ```json
+  {
+    "fromAddress": "sender_public_key",
+    "toAddress": "recipient_address",
+    "amount": 10,
+    "privateKey": "sender_private_key",
+    "fee": 1
+  }
+  ```
+- **Success Response:**
+  - **Code:** 200
+  - **Content:** 
+    ```json
+    {
+      "message": "Transaction added to pending transactions."
+    }
+    ```
+- **Error Response:**
+  - **Code:** 400
+  - **Content:** `{ "error": "Error message" }`
+
+### 2. Mine Block
+
+Mines a new block and adds it to the blockchain.
+
+- **URL:** `/mine`
+- **Method:** `POST`
+- **Data Params:**
+  ```json
+  {
+    "minerAddress": "miner_address"
+  }
+  ```
+- **Success Response:**
+  - **Code:** 200
+  - **Content:** 
+    ```json
+    {
+      "message": "Block mined successfully.",
+      "block": {
+        // Block details
+      }
+    }
+    ```
+
+### 3. Get Balance
+
+Retrieves the balance for a given wallet address.
+
+- **URL:** `/balance/:address`
+- **Method:** `GET`
+- **URL Params:** 
+  - `address`: The wallet address to check
+- **Success Response:**
+  - **Code:** 200
+  - **Content:** 
+    ```json
+    {
+      "balance": 100
+    }
+    ```
+
+### 4. Forge Block
+
+Forges a new block in a Proof of Stake system.
+
+- **URL:** `/forge`
+- **Method:** `POST`
+- **Data Params:**
+  ```json
+  {
+    "forgerAddress": "forger_address"
+  }
+  ```
+- **Success Response:**
+  - **Code:** 200
+  - **Content:** 
+    ```json
+    {
+      "message": "Block forged successfully.",
+      "block": {
+        // Block details
+      }
+    }
+    ```
+- **Error Response:**
+  - **Code:** 403
+  - **Content:** `{ "error": "Not authorized to forge at this time." }`
+
+### 5. Create Multi-Signature Transaction
+
+Creates a new multi-signature transaction.
+
+- **URL:** `/multisig-transaction`
+- **Method:** `POST`
+- **Data Params:**
+  ```json
+  {
+    "fromAddresses": ["address1", "address2"],
+    "toAddress": "recipient_address",
+    "amount": 10,
+    "requiredSignatures": 2,
+    "signatures": [
+      {
+        "address": "address1",
+        "signature": "signature1"
+      },
+      {
+        "address": "address2",
+        "signature": "signature2"
+      }
+    ]
+  }
+  ```
+- **Success Response:**
+  - **Code:** 200
+  - **Content:** 
+    ```json
+    {
+      "message": "Multi-signature transaction added to pending transactions."
+    }
+    ```
+- **Error Response:**
+  - **Code:** 400
+  - **Content:** `{ "error": "Error message" }`
+
+### 6. Deploy Smart Contract
+
+Deploys a new smart contract.
+
+- **URL:** `/deploy-contract`
+- **Method:** `POST`
+- **Data Params:**
+  ```json
+  {
+    "address": "contract_address",
+    "code": "contract_code"
+  }
+  ```
+- **Success Response:**
+  - **Code:** 200
+  - **Content:** 
+    ```json
+    {
+      "message": "Smart contract deployed successfully."
+    }
+    ```
+- **Error Response:**
+  - **Code:** 400
+  - **Content:** `{ "error": "Error message" }`
+
+### 7. Execute Smart Contract
+
+Executes a deployed smart contract.
+
+- **URL:** `/execute-contract`
+- **Method:** `POST`
+- **Data Params:**
+  ```json
+  {
+    "contractAddress": "contract_address",
+    "transaction": {
+      // Transaction details
+    }
+  }
+  ```
+- **Success Response:**
+  - **Code:** 200
+  - **Content:** 
+    ```json
+    {
+      "result": "Execution result"
+    }
+    ```
+- **Error Response:**
+  - **Code:** 400
+  - **Content:** `{ "error": "Error message" }`
+
+### 8. Create Wallet
+
+Creates a new wallet.
+
+- **URL:** `/create-wallet`
+- **Method:** `POST`
+- **Success Response:**
+  - **Code:** 200
+  - **Content:** 
+    ```json
+    {
+      "publicKey": "public_key",
+      "privateKey": "private_key"
+    }
+    ```
+- **Error Response:**
+  - **Code:** 500
+  - **Content:** `{ "error": "Error message" }`
+
+### 9. Get Wallet
+
+Retrieves wallet information.
+
+- **URL:** `/wallet/:publicKey`
+- **Method:** `GET`
+- **URL Params:** 
+  - `publicKey`: The public key of the wallet
+- **Success Response:**
+  - **Code:** 200
+  - **Content:** 
+    ```json
+    {
+      "publicKey": "public_key"
+    }
+    ```
+- **Error Response:**
+  - **Code:** 404
+  - **Content:** `{ "error": "Wallet not found" }`
+
+### 10. Mint NFT
+
+Mints a new NFT.
+
+- **URL:** `/mint-nft`
+- **Method:** `POST`
+- **Data Params:**
+  ```json
+  {
+    "owner": "owner_address",
+    "metadata": "nft_metadata",
+    "fee": 1
+  }
+  ```
+- **Success Response:**
+  - **Code:** 200
+  - **Content:** 
+    ```json
+    {
+      "message": "NFT minting transaction added to mempool",
+      "tokenId": "token_id"
+    }
+    ```
+- **Error Response:**
+  - **Code:** 400
+  - **Content:** `{ "error": "Error message" }`
+
+### 11. Transfer NFT
+
+Transfers an NFT to a new owner.
+
+- **URL:** `/transfer-nft`
+- **Method:** `POST`
+- **Data Params:**
+  ```json
+  {
+    "tokenId": "token_id",
+    "fromAddress": "current_owner_address",
+    "toAddress": "new_owner_address",
+    "privateKey": "current_owner_private_key"
+  }
+  ```
+- **Success Response:**
+  - **Code:** 200
+  - **Content:** 
+    ```json
+    {
+      "message": "NFT transfer transaction added to mempool"
+    }
+    ```
+- **Error Response:**
+  - **Code:** 400
+  - **Content:** `{ "error": "Error message" }`
+
+### 12. Get NFT
+
+Retrieves information about a specific NFT.
+
+- **URL:** `/nft/:tokenId`
+- **Method:** `GET`
+- **URL Params:** 
+  - `tokenId`: The ID of the NFT
+- **Success Response:**
+  - **Code:** 200
+  - **Content:** 
+    ```json
+    {
+      // NFT details
+    }
+    ```
+- **Error Response:**
+  - **Code:** 404
+  - **Content:** `{ "error": "NFT not found" }`
+
+### 13. Get NFTs by Owner
+
+Retrieves all NFTs owned by a specific address.
+
+- **URL:** `/nfts/:owner`
+- **Method:** `GET`
+- **URL Params:** 
+  - `owner`: The address of the NFT owner
+- **Success Response:**
+  - **Code:** 200
+  - **Content:** 
+    ```json
+    [
+      // Array of NFTs
+    ]
+    ```
+- **Error Response:**
+  - **Code:** 400
+  - **Content:** `{ "error": "Error message" }`
+
+## Error Responses
+
+All endpoints may return the following error responses:
+
+- **Code:** 400 BAD REQUEST
+  - **Content:** `{ "error": "Error message" }`
+
+- **Code:** 500 INTERNAL SERVER ERROR
+  - **Content:** `{ "error": "Internal server error" }`
+
+## Notes
+
+- All requests and responses are in JSON format.
+- Ensure that you include the appropriate headers in your requests, such as `Content-Type: application/json` for POST requests.
+- The API uses HTTP for communication. Consider implementing HTTPS for secure communication in a production environment.
+- Private keys should be handled with extreme caution. In a production environment, consider implementing more secure key management practices.
