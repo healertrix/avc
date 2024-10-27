@@ -12,6 +12,7 @@
     "ws": "^8.18.0"
   },
   "scripts": {
-    "dev": "nodemon simplecoin.js"
+    "dev": "nodemon simplecoin.js",
+    "start": "node simplecoin.js"
   }
 }
