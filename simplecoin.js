@@ -148,7 +148,7 @@ class Blockchain {
     this.chain = [];
     this.difficulty = 4;
     this.pendingTransactions = [];
-    this.miningReward = 100000000;
+    this.miningReward = 10;
     this.mempool = new Mempool();
     this.blockTime = 10000; // Target block time in milliseconds
     this.contracts = new Map();
